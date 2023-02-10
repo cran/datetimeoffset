@@ -119,6 +119,7 @@ test_that("format_strftime()", {
 })
 
 test_that("format_nanotime()", {
+    skip_on_cran() # failed on `r-oldrel-windows-ix86+x86_64`
     skip_if_not_installed("nanotime")
     dt <- as_datetimeoffset("2020-04-04T10:10:10Z")
     expect_equal(format_nanotime(dt, tz = "GMT"),
@@ -196,6 +197,41 @@ test_that("format_edtf()", {
                  "2020-XX-10T20:XX:05-07")
     expect_equal(format_edtf(as_datetimeoffset("2020-05"), precision = "nanosecond", usetz = TRUE),
                  "2020-05-XXTXX:XX:XX.XXXXXXXXX+XX:XX[X]")
+})
+
+test_that("format_exiftool()", {
+expect_equal(format_exiftool(as_datetimeoffset("2020"), mode = "xmp"),
+             "2020")
+expect_equal(format_exiftool(as_datetimeoffset("2020")),
+             "2020:01:01 00:00:00")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05"), mode = "xmp"),
+             "2020:05")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10"), mode = "xmp"),
+             "2020:05:10")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20"), mode = "xmp"),
+             "2020:05:10 20:00")
+expect_equal(format_iso8601(as_datetimeoffset("2020:05:10 20")),
+             "2020-05-10T20")
+expect_equal(format_iso8601(as_datetimeoffset("2020:05:10 20"), mode = "xmp"),
+             "2020-05-10T20:00")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15"), mode = "xmp"),
+             "2020:05:10 20:15")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05")),
+             "2020:05:10 20:15:05")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05.123")),
+             "2020:05:10 20:15:05.123")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05-07")),
+             "2020:05:10 20:15:05-07:00")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05.123-07")),
+             "2020:05:10 20:15:05.123-07:00")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05.123-07"), mode = "pdf"),
+             "2020:05:10 20:15:05-07:00")
+expect_equal(format_exiftool(as_datetimeoffset("2020:05:10 20:15:05-07:00")),
+             "2020:05:10 20:15:05-07:00")
+expect_equal(format_iso8601(as_datetimeoffset("2020:05:10 20:15:05-07")),
+             "2020-05-10T20:15:05-07")
+expect_equal(format_iso8601(as_datetimeoffset("2020:05:10 20:15:05-07"), mode = "xmp"),
+             "2020-05-10T20:15:05-07:00")
 })
 
 test_that("negative/large years", {

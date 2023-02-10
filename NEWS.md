@@ -1,4 +1,24 @@
-datetimeoffset 0.1.1
+datetimeoffset 0.2.1
+====================
+
+New features
+------------
+
+* `format_exiftool()` formats datetime strings as expected by the command-line tool `exiftool` (#54).
+* `as_datetimeoffset.integer()` and `as_datetimeoffset.numeric()`
+  coerce numeric values as the new `datetimeoffset()` objects `year` field (#53).
+
+Bug fixes and minor improvements
+--------------------------------
+
+* `format_iso8601()` has new argument `mode` which supports "normal" and "xmp".
+
+  - XMP metadata datetimes are a strict subset of ISO 8601 datetimes
+
+* `as_datetimeoffset.character()` now parses pdfmark datetimes of the form `D:YYYYmmddHHMMSSZ00'00'` (#56)
+* Skip a test on CRAN which was failing on `r-oldrel-windows-ix86+x86_64` (#52)
+
+datetimeoffset 0.1.2
 ====================
 
 Initial features
