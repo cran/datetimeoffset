@@ -1,3 +1,14 @@
+datetimeoffset 0.3.1
+====================
+
+New features
+------------
+
+* `format_pdfmark()` has new argument `prefix` that supports `"D:"` or `""` (#57).
+* If you have a version of `{clock}` whose `as_sys_time()` method has an `...` argument
+  then the registered S3 method for `datetimeoffset()` objects now supports
+  arguments `ambiguous`, `nonexistent`, and `fill` (#33).
+
 datetimeoffset 0.2.1
 ====================
 
@@ -44,7 +55,7 @@ Initial features
   + All pdfmark datetime strings
   + Decent subset of ISO 8601 datetime strings
 
-    - Also supports the extension of [specifying a named time zone at the end surrounded in brackets.](https://neo4j.com/docs/cypher-manual/current/syntax/temporal/#cypher-temporal-specify-time-zone)
+    - Also supports the extension of specifying a named time zone at the end surrounded in brackets.
 
   + The datetime strings understood by the default `tryFormats` of `as.POSIXlt()`
   + `Date()` objects
@@ -57,7 +68,7 @@ Initial features
 
 * Support for formatting output strings:
 
-  + `format()` returns [RFC 3339 with de facto time zone extension](https://neo4j.com/docs/cypher-manual/current/syntax/temporal/) strings
+  + `format()` returns RFC 3339 with de facto time zone extension strings
   + `format_edtf()` returns [Extended Date Time Format (EDTF)](https://www.loc.gov/standards/datetime/) strings
 
     - Supports unofficial extensions of "Unspecified Digit" feature to time components and time zones

@@ -2,7 +2,7 @@ Package: datetimeoffset
 Type: Package
 Title: Datetimes with Optional UTC Offsets and/or Heterogeneous Time
         Zones
-Version: 0.2.1
+Version: 0.3.1
 Authors@R: c(
         person("Trevor L", "Davis", role=c("aut", "cre"), email="trevor.l.davis@gmail.com",
                comment = c(ORCID = "0000-0001-6341-4639")))
@@ -18,7 +18,7 @@ URL: https://trevorldavis.com/R/datetimeoffset/dev/,
 BugReports: https://github.com/trevorld/r-datetimeoffset
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Depends: R (>= 3.4.0)
 Imports: clock, methods, purrr (>= 1.0.0), vctrs (>= 0.5.0)
 Suggests: lubridate (>= 1.9.0), nanotime (>= 0.3.7), knitr, parttime,
@@ -26,8 +26,8 @@ Suggests: lubridate (>= 1.9.0), nanotime (>= 0.3.7), knitr, parttime,
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-02-10 05:43:21 UTC; trevorld
+Packaged: 2023-05-11 04:03:57 UTC; trevorld
 Author: Trevor L Davis [aut, cre] (<https://orcid.org/0000-0001-6341-4639>)
 Maintainer: Trevor L Davis <trevor.l.davis@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-02-10 08:30:02 UTC
+Date/Publication: 2023-05-11 05:50:02 UTC
