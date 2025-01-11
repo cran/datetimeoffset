@@ -132,6 +132,18 @@ test_that("as_datetimeoffset.character()", {
     expect_equal(format(as_datetimeoffset("20060926213913+02'00'")),
                  "2006-09-26T21:39:13+02:00")
 
+    # Time (without day)
+    expect_equal(format(as_datetimeoffset("T20")), "T20")
+
+    for (time in c("T20:20", "20:20", "T2020"))
+        expect_equal(format(as_datetimeoffset(time)), "T20:20")
+
+    for (time in c("T20:20:04", "20:20:04", "T202004"))
+        expect_equal(format(as_datetimeoffset(time)), "T20:20:04")
+
+    for (time in c("T20:20:04.004", "20:20:04.004", "T202004.004"))
+        expect_equal(format(as_datetimeoffset(time)), "T20:20:04.004")
+
     # Weird pdfmark ending found in `ghostscript` output in UTC time locale
     expect_equal(format(as_datetimeoffset("D:20060926213913Z00'00'")),
                  "2006-09-26T21:39:13Z")
@@ -344,11 +356,11 @@ test_that("{clock} classes", {
              "2020-11-01T01:30:00-04:00")
     dto <- as_datetimeoffset(dts)
     expect_error(clock::as_sys_time(dto))
-    expect_equal(format(as_sys_time.datetimeoffset(dto, ambiguous = "NA")),
+    expect_equal(format(as_sys_time(dto, ambiguous = "NA")),
                  c(NA_character_, "2020-11-01T06:30:00", "2020-11-01T05:30:00"))
-    expect_equal(format(as_sys_time.datetimeoffset(dto, ambiguous = "earliest")),
+    expect_equal(format(as_sys_time(dto, ambiguous = "earliest")),
                  c("2020-11-01T05:30:00", "2020-11-01T06:30:00", "2020-11-01T05:30:00"))
-    expect_equal(format(as_sys_time.datetimeoffset(dto, ambiguous = "latest")),
+    expect_equal(format(as_sys_time(dto, ambiguous = "latest")),
                  c("2020-11-01T06:30:00", "2020-11-01T06:30:00", "2020-11-01T05:30:00"))
     expect_error(clock::as_zoned_time(dto))
     skip_if_not("UTC" %in% OlsonNames())
@@ -367,7 +379,8 @@ test_that("{clock} classes", {
 })
 
 test_that("as_datetimeoffset.nanotime()", {
-    skip_if_not_installed("nanotime")
+    skip_if_not_installed("nanotime", "0.3.10.2")
+
     dt <- as_datetimeoffset(nanotime::nanotime("2020-05-15T08:23:16.03Z"))
     expect_equal(format(dt), "2020-05-15T08:23:16.030000000Z")
     dt <- as_datetimeoffset(nanotime::nanotime("2020-05-15T08:23:16Z"))

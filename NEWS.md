@@ -1,3 +1,22 @@
+datetimeoffset 0.4.1
+====================
+
+New features
+------------
+
+* `format_iso8601()`'s `mode` argument now supports `"toml"` for outputting datetimes
+  using the subset of ISO 8601 supported by [TOML v1.0.0](https://toml.io/en/v1.0.0#offset-date-time) (#60).
+
+Bug fixes and minor improvements
+--------------------------------
+
+* `as_datetimeoffset.character()` can now parse ISO 8601 times without associated dates (#59).
+* `format()` and `format_iso8601()` can now format times without associated dates (#59).
+* `format_edtf()` now truncates the number of subsecond digits according to 
+   the `subsecond_digits` field.
+* New `get_tz.Date()` S3 method which returns `NA_character_` for "Date" objects (#62).
+* Stops using functions deprecated in `{clock}` v0.7.0.
+
 datetimeoffset 0.3.1
 ====================
 

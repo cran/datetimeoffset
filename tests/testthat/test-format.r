@@ -9,6 +9,8 @@ test_that("format_iso8601()", {
     # "2020-05-15T08:23:16-07:00"
     expect_equal(format_iso8601(as_datetimeoffset("2020")),
                  "2020")
+    expect_equal(format_iso8601(datetimeoffset(2020, hour = 20)),
+                 "2020")
     expect_equal(format_iso8601(as_datetimeoffset("2020-05")),
                  "2020-05")
     expect_equal(format_iso8601(as_datetimeoffset("2020-05-15")),
@@ -123,7 +125,9 @@ test_that("format_strftime()", {
 
 test_that("format_nanotime()", {
     skip_on_cran() # failed on `r-oldrel-windows-ix86+x86_64`
-    skip_if_not_installed("nanotime")
+    skip_if_not_installed("nanotime", "0.3.10.2")
+    skip_if_not_installed("RcppCCTZ", "0.2.12") # fixes bug with `as.nanotime(NA_character_)`
+
     dt <- as_datetimeoffset("2020-04-04T10:10:10Z")
     expect_equal(format_nanotime(dt, tz = "GMT"),
                  "2020-04-04T10:10:10.000000000+00:00")
@@ -132,7 +136,6 @@ test_that("format_nanotime()", {
     skip_if_not("America/Los_Angeles" %in% OlsonNames())
     expect_equal(format_nanotime(dt, tz = "America/Los_Angeles"),
                  "2020-04-04T03:10:10.000000000-07:00")
-    skip_if_not_installed("RcppCCTZ", "0.2.12") # fixes bug with `as.nanotime(NA_character_)`
     expect_equal(format_nanotime(NA_datetimeoffset_), NA_character_)
 })
 
@@ -179,7 +182,7 @@ test_that("format_edtf()", {
     skip_if_not("America/Los_Angeles" %in% OlsonNames())
     dt <- c("2020", "2020-05-15T08:23:16.0-07:00[America/Los_Angeles]")
     expect_equal(format_edtf(as_datetimeoffset(dt)),
-                 c("2020", "2020-05-15T08:23:16.000000000-07:00"))
+                 c("2020", "2020-05-15T08:23:16.0-07:00"))
 
     skip_if_not("America/New_York" %in% OlsonNames())
     # ambiguous time so not possible to compute offset
@@ -200,6 +203,47 @@ test_that("format_edtf()", {
                  "2020-XX-10T20:XX:05-07")
     expect_equal(format_edtf(as_datetimeoffset("2020-05"), precision = "nanosecond", usetz = TRUE),
                  "2020-05-XXTXX:XX:XX.XXXXXXXXX+XX:XX[X]")
+})
+
+test_that("format_iso8601(mode = 'toml')", {
+    # datetimes
+    expect_equal(format_iso8601(as_datetimeoffset("2020"), mode = "toml"),
+                 NA_character_)
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01"), mode = "toml"),
+                 NA_character_)
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02"), mode = "toml"),
+                 "2020-01-02")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10"), mode = "toml"),
+                 "2020-01-02")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10"), mode = "toml"),
+                 "2020-01-02T10:10:00")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10:12"), mode = "toml"),
+                 "2020-01-02T10:10:12")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10:12.345"), mode = "toml"),
+                 "2020-01-02T10:10:12.345")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10:12Z"), mode = "toml"),
+                 "2020-01-02T10:10:12Z")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10:12+07"), mode = "toml"),
+                 "2020-01-02T10:10:12+07:00")
+    expect_equal(format_iso8601(as_datetimeoffset("2020-01-02T10:10:12+07:00"), mode = "toml"),
+                 "2020-01-02T10:10:12+07:00")
+
+    # times
+    expect_equal(format_iso8601(as_datetimeoffset("T10"), mode = "toml"),
+                 NA_character_)
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10"), mode = "toml"),
+                 "10:10:00")
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10:12"), mode = "toml"),
+                 "10:10:12")
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10:12.345"), mode = "toml"),
+                 "10:10:12.345")
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10:12Z"), mode = "toml"),
+                 "10:10:12")
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10:12+07"), mode = "toml"),
+                 "10:10:12")
+    expect_equal(format_iso8601(as_datetimeoffset("T10:10:12+07:00"), mode = "toml"),
+                 "10:10:12")
+
 })
 
 test_that("format_exiftool()", {

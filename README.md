@@ -1,7 +1,7 @@
 # r-datetimeoffset <img src="man/figures/logo.png" align="right" width="200px" alt="datetimeoffset hex sticker">
 
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/datetimeoffset)](https://cran.r-project.org/package=datetimeoffset)
-[![R-CMD-check](https://github.com/trevorld/r-datetimeoffset/workflows/R-CMD-check/badge.svg)](https://github.com/trevorld/r-datetimeoffset/actions)
+[![R-CMD-check](https://github.com/trevorld/r-datetimeoffset/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/trevorld/r-datetimeoffset/actions)
 [![codecov](https://codecov.io/github/trevorld/r-datetimeoffset/branch/main/graph/badge.svg)](https://app.codecov.io/github/trevorld/r-datetimeoffset)
 
 ### Table of Contents
@@ -807,6 +807,7 @@ Please feel free to [open a pull request to add any missing relevant links](http
 
 * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations)
 
+  + [TOML datetimes](https://toml.io/en/v1.0.0#offset-date-time)
   + [XMP datetimes](https://github.com/adobe/xmp-docs/blob/master/XMPNamespaces/XMPDataTypes/CoreProperties.md#date)
 
 * [pdfmark datetimes](https://opensource.adobe.com/dc-acrobat-sdk-docs/library/pdfmark/pdfmark_Basic.html#document-info-dictionary-docinfo)
